@@ -20,7 +20,7 @@ const mapDispatchToProps = dispatch => ({
   });
   
 
-class Favorites extends Component {
+class Favorite extends Component {
   render() {
     if (this.props.products.isLoading) {
       return (<Loading />);
@@ -72,4 +72,4 @@ class Favorites extends Component {
     );
   };
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Favorites);
+export default connect(mapStateToProps, mapDispatchToProps)(Favorite);

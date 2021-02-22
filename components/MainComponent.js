@@ -9,14 +9,16 @@ import Menu from './MenuComponent';
 import Productdetail from './ProductdetailComponent';
 import Profile from './ProfileComponent';
 import Contact from './ContactComponent';
-import Favorites from './FavoriteComponent';
+import Favorite from './FavoriteComponent';
 import Cart from './CartComponent';
 import { Card, Image, Icon } from 'react-native-elements';
+
 // redux
 import { connect } from 'react-redux';
 import { fetchLeaders, fetchProducts, fetchComments, fetchPromos  } from '../redux/ActionCreators';
 import { View } from 'react-native';
 import { StatusBar } from 'react-native';
+import Login from './LoginComponent';
 const mapDispatchToProps = dispatch => ({
   fetchLeaders: () => dispatch(fetchLeaders()),
   fetchProducts: () => dispatch(fetchProducts()),
@@ -74,6 +76,8 @@ function ProfileNavigatorScreen(){
         headerTitleStyle: { color: '#fff' }
       }}>
       <ProfileNavigator.Screen name='Profile' component={Profile} options={{ headerTitle: 'Profile' }}/>
+      <MenuNavigator.Screen name='Favorite' component={Favorite} options={{ headerTitle: 'Favorite' }} />
+      <ProfileNavigator.Screen name='Login' component={Login} options={{ headerTitle: 'Login - Register' }} />
     </ProfileNavigator.Navigator>
   );
 }
@@ -127,6 +131,46 @@ function CartNavigatorScreen() {
         options={({ headerTitle: 'Giỏ Hàng' })}
       />
     </CartNavigator.Navigator>
+  );
+}
+const LoginNavigator = createStackNavigator();
+function LoginNavigatorScreen() {
+  return (
+    <LoginNavigator.Navigator initialRouteName='LoginRegister'
+      screenOptions={{
+        headerStyle: { backgroundColor: '#1e88e5' },
+        headerTintColor: '#fff',
+        headerTitleStyle: { color: '#fff' }
+      }}>
+      <LoginNavigator.Screen name='LoginRegister' component={TabNavigatorScreen}
+        options={({ navigation }) => ({
+          headerTitle: 'Login | Register',
+          headerLeft: () => (<Icon name='menu' size={36} color='#fff' onPress={() => navigation.toggleDrawer()} />)
+        })} />
+    </LoginNavigator.Navigator>
+  );
+}
+const TabNavigator = createBottomTabNavigator();
+function TabNavigatorScreen() {
+  return (
+    <TabNavigator.Navigator initialRouteName='Login'
+      tabBarOptions={{
+        activeBackgroundColor: '#7cc',
+        inactiveBackgroundColor: '#fff',
+        activeTintColor: '#fff',
+        inactiveTintColor: 'gray'
+      }}>
+      <TabNavigator.Screen name='Login' component={Login}
+        options={{
+          tabBarLabel: 'Login',
+          tabBarIcon: ({ color, size }) => (<Icon name='sign-in' type='font-awesome' size={size} color={color} />)
+        }} />
+      <TabNavigator.Screen name='Register' component={Register}
+        options={{
+          tabBarLabel: 'Register',
+          tabBarIcon: ({ color, size }) => (<Icon name='user-plus' type='font-awesome' size={size} color={color} />)
+        }} />
+    </TabNavigator.Navigator>
   );
 }
 const MainNavigator = createBottomTabNavigator();

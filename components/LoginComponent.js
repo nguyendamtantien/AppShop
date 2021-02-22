@@ -1,109 +1,63 @@
 import React, { Component } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Button,
-  TouchableHighlight,
-  Image,
-  Alert
-} from 'react-native';
+import { View, Button } from 'react-native';
+import { Input, CheckBox } from 'react-native-elements';
+import * as SecureStore from 'expo-secure-store';
 
-export default class Login extends Component {
-
+class Login extends Component {
   constructor(props) {
     super(props);
-    state = {
-      email   : '',
+    this.state = {
+      username: '',
       password: '',
+      remember: false
     }
   }
-
-  onClickListener = (viewId) => {
-    Alert.alert("Alert", "Button pressed "+viewId);
-  }
-
   render() {
     return (
-      <View style={styles.container}>
-        <View style={styles.inputContainer}>
-          <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/message/ultraviolet/50/3498db'}}/>
-          <TextInput style={styles.inputs}
-              placeholder="Email"
-              keyboardType="email-address"
-              underlineColorAndroid='transparent'
-              onChangeText={(email) => this.setState({email})}/>
+      <View style={{ justifyContent: 'center', margin: 20 }}>
+        <Input
+          placeholder='Username'
+          leftIcon={{ name: 'user-o', type: 'font-awesome' }}
+          value={this.state.username}
+          onChangeText={(username) => this.setState({ username })} />
+        <Input
+          placeholder='Password'
+          leftIcon={{ name: 'key', type: 'font-awesome' }}
+          value={this.state.password}
+          onChangeText={(password) => this.setState({ password })} />
+        <CheckBox containerStyle={{ backgroundColor: null }}
+          title='Remember Me' center
+          checked={this.state.remember}
+          onPress={() => this.setState({ remember: !this.state.remember })} />
+        <View style={{ marginTop: 20 }}>
+          <Button title='Login' color='#7cc' onPress={() => this.handleLogin()} />
         </View>
-        
-        <View style={styles.inputContainer}>
-          <Image style={styles.inputIcon} source={{uri: 'https://png.icons8.com/key-2/ultraviolet/50/3498db'}}/>
-          <TextInput style={styles.inputs}
-              placeholder="Password"
-              secureTextEntry={true}
-              underlineColorAndroid='transparent'
-              onChangeText={(password) => this.setState({password})}/>
-        </View>
-
-        <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={() => this.onClickListener('login')}>
-          <Text style={styles.loginText}>Login</Text>
-        </TouchableHighlight>
-
-        <TouchableHighlight style={styles.buttonContainer} onPress={() => this.onClickListener('restore_password')}>
-            <Text>Forgot your password?</Text>
-        </TouchableHighlight>
-
-        <TouchableHighlight style={styles.buttonContainer} onPress={() => this.onClickListener('register')}>
-            <Text>Register</Text>
-        </TouchableHighlight>
       </View>
     );
   }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#DCDCDC',
-  },
-  inputContainer: {
-      borderBottomColor: '#F5FCFF',
-      backgroundColor: '#FFFFFF',
-      borderRadius:30,
-      borderBottomWidth: 1,
-      width:350,
-      height:50,
-      marginBottom:20,
-      flexDirection: 'row',
-      alignItems:'center'
-  },
-  inputs:{
-      height:50,
-      marginLeft:16,
-      borderBottomColor: '#FFFFFF',
-      flex:1,
-  },
-  inputIcon:{
-    width:30,
-    height:30,
-    marginLeft:15,
-    justifyContent: 'center'
-  },
-  buttonContainer: {
-    height:45,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom:20,
-    width:200,
-    borderRadius:30,
-  },
-  loginButton: {
-    backgroundColor: "#00b5ec",
-  },
-  loginText: {
-    color: 'white',
+  componentDidMount() {
+    SecureStore.getItemAsync('userinfo')
+      .then((userdata) => {
+        let userinfo = JSON.parse(userdata);
+        if (userinfo) {
+          this.setState({ username: userinfo.username });
+          this.setState({ password: userinfo.password });
+          this.setState({ remember: true })
+        }
+      });
   }
-});
+  handleLogin() {
+    if (this.state.remember) {
+      SecureStore
+        .setItemAsync('userinfo', JSON.stringify({ username: this.state.username, password: this.state.password }))
+        .catch((error) => alert('Could not save user info', error));
+      alert('Remembered user!');
+    } else {
+      SecureStore
+        .deleteItemAsync('userinfo')
+        .catch((error) => alert('Could not delete user info', error));
+      alert('Forgotten user!');
+    }
+  }
+}
+export default Login;
