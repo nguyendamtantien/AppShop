@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { postFavorite, postComment, postCart } from '../redux/ActionCreators';
 //animation
 import * as Animatable from 'react-native-animatable';
+import {comments} from '../redux/comments';
 const mapStateToProps = state => {
   return {
     products: state.products,
@@ -70,24 +71,18 @@ class RenderDish extends Component {
             </Image>
             <Text style={{ margin: 10 }} >{product.description}</Text>
               <View style={styles.icons}>
-              <Icon raised reverse type='font-awesome' color='#f50'
+              <Icon raised reverse type='font-awesome' color='#FF0000'
                 name={this.props.favorite ? 'heart' : 'heart-o'} 
-                onPress={() => this.props.favorite ? alert('Already favorite') : this.props.onPressFavorite()} />
-              <Icon raised reverse type="font-awesome" name="pencil"  color="#512DA8"
+                onPress={() => this.props.favorite ? alert('Sản phẩm này đã nằm trong Sản phẩm yêu thícg của bạn.') : this.props.onPressFavorite()} />
+              <Icon raised reverse type="font-awesome" name="pencil"  color="#363636"
                 onPress={this.props.onPressAddComment}/>
-               <Icon
-            raised
-            reverse
-            name={this.props.cart ? "shopping-cart" : "shopping-cart"}
-            type="font-awesome"
-            color="#f50"
-            onPress={() =>
-              this.props.cart ? alert("Món này đã nằm trong giỏ hàng của bạn") : this.props.onPressAddToCart()
+               <Icon raised reverse 
+                name={this.props.cart ? "shopping-cart" : "shopping-cart"} type="font-awesome" color="#363636" 
+                onPress={() => this.props.cart ? alert("Sản phẩm này đã nằm trong giỏ hàng của bạn") : this.props.onPressAddToCart()
             }
           />
               </View>
-              
-              
+              <Text style={styles.itemPrice}>{product.price}$</Text>
           </Card>
         );
       }
@@ -120,7 +115,7 @@ class RenderComments extends Component {
     };
   }
 
-class Dishdetail extends Component {
+class Productdetail extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -276,9 +271,16 @@ const styles = StyleSheet.create({
     color: "white",
     marginBottom: 20
   },
+  itemPrice: {
+    fontSize: 25,
+    fontWeight: "bold",
+    fontWeight: '500',
+    color: '#2a2a2a',
+    textAlign: "center",
+  },
   modalText: {
     fontSize: 18,
     margin: 10
   }
 });
-export default connect(mapStateToProps, mapDispatchToProps)(Dishdetail);
+export default connect(mapStateToProps, mapDispatchToProps)(Productdetail);

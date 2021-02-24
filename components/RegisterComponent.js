@@ -5,7 +5,7 @@ import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import { baseUrl } from '../shared/baseUrl';
 import * as ImageManipulator from "expo-image-manipulator";
-
+import * as SecureStore from 'expo-secure-store';
 class Register extends Component {
   constructor(props) {
     super(props);
@@ -25,7 +25,7 @@ class Register extends Component {
 
         <View style={{ justifyContent: 'center', margin: 20}}>
           <View style={{ flex: 1, flexDirection: 'row', margin: 20 }}>
-            <Image style={{ margin: 10, width: 80, height: 60 }} source={{ uri: this.state.imageUrl }} />
+            <Image style={{ margin: 10, width: 120, height: 120 }} source={{ uri: this.state.imageUrl }} />
             <View style={{ justifyContent: 'center' }}>
               <Button title='Camera' onPress={() => this.getImageFromCamera()} />
             </View>

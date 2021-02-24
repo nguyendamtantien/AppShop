@@ -116,7 +116,7 @@ class Contact extends Component
           <Text style={{ margin: 10 }}>Facebook: SHOP TH</Text>
           <Button
             title=" Phản Hồi"
-            buttonStyle={{ backgroundColor: "#1e88e5" }}
+            buttonStyle={{ backgroundColor: "#111111" }}
             icon={<Icon name="envelope-o" type="font-awesome" color="white" />}
             onPress={this.sendMail}
           />

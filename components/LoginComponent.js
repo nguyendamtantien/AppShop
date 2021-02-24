@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Button } from 'react-native';
 import { Input, CheckBox } from 'react-native-elements';
 import * as SecureStore from 'expo-secure-store';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 class Login extends Component {
   constructor(props) {
@@ -35,6 +36,7 @@ class Login extends Component {
       </View>
     );
   }
+  
   componentDidMount() {
     SecureStore.getItemAsync('userinfo')
       .then((userdata) => {
@@ -46,6 +48,7 @@ class Login extends Component {
         }
       });
   }
+  
   handleLogin() {
     if (this.state.remember) {
       SecureStore

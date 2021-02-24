@@ -56,7 +56,7 @@ class Menu extends Component {
         </ListItem.Content>
         <Text style={styles.itemPrice}>{item.price}$</Text> */}
          <View style={styles.itemContainer}>
-           <Image source={{uri: baseUrl + item.image}} style={{ width: '100%', height: 100, flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}/>
+           <Image source={{uri: baseUrl + item.image}} style={styles.itemImage}/>
            <Text style={styles.itemName} numberOfLines={2}>
              {item.name}
            </Text>

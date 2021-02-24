@@ -7,6 +7,8 @@ import { baseUrl } from '../shared/baseUrl';
 import { connect } from 'react-redux';
 //animtion 
 import * as Animatable from 'react-native-animatable';
+//slider 
+import { SliderBox } from "react-native-image-slider-box";
 const mapStateToProps = state => {
   return {
     products: state.products,
@@ -30,7 +32,7 @@ class RenderItem extends Component {
             <Image source={{ uri: baseUrl + item.image }} style={{ width: '100%', height: 100, flexGrow: 1, alignItems: 'center', justifyContent: 'center' }}>
               <Card.FeaturedSubtitle>{item.designation}</Card.FeaturedSubtitle>
             </Image>
-            <Text style={{ margin: 10 }}>{item.description}</Text>
+            <Text style={{ margin: 10, fontSize: 15 }}>{item.description}</Text>
             <Text style={styles.itemPrice}>{item.price}$</Text>
           </Card>
         );
@@ -41,14 +43,33 @@ class RenderItem extends Component {
 }
 
 class Home extends Component {
-  
+  constructor(props) {
+    super(props);
+    this.state = {
+      images: [
+        "https://appthshop.herokuapp.com/images/logo.jpg",
+        "https://appthshop.herokuapp.com/images/ao1.png",
+        "https://appthshop.herokuapp.com/images/quan-jean-nam.jpg",
+        "https://appthshop.herokuapp.com/images/quan-thun-nam.jpg",
+        "https://appthshop.herokuapp.com/images/Giay-Sneaker-nam.jpg", // Network image
+      ]
+    };
+  }
   render() {
     const product = this.props.products.products.filter((product) => product.featured === true)[0];
     const promo = this.props.promotions.promotions.filter((promo) => promo.featured === true)[0];
     const leader = this.props.leaders.leaders.filter((leader) => leader.featured === true)[0];
     return (
       <ScrollView>
-        <Animatable.View animation="fadeInDown" duration={2000} delay={1000}>
+        <SliderBox
+        images={this.state.images}
+        onCurrentImagePressed={index => console.warn(`image ${index} pressed`)}
+        currentImageEmitter={index => console.warn(`current pos is: ${index}`)}
+        paginationBoxVerticalPadding={20}
+        autoplay
+        circleLoop/>
+        {/* <Image source={{ uri: baseUrl + "images/logo.jpg" }}style={{ width: '100%', height: 250, flexGrow: 1, alignItems: 'center', justifyContent: 'center' }} /> */}
+         <Animatable.View animation="fadeInDown" duration={2000} delay={1000}>
           <RenderItem item={product}
         isLoading={this.props.products.isLoading}
         errMess={this.props.products.errMess} /></Animatable.View>
@@ -79,14 +100,17 @@ const styles = StyleSheet.create({
   },
   itemName: {
     fontSize: 20,
+    fontWeight: "bold",
     color: '#484848',
     marginVertical: 4,
+    textAlign: "center",
   },
   itemPrice: {
-    fontSize: 16,
+    fontSize: 20,
+    fontWeight: "bold",
     fontWeight: '500',
     color: '#2a2a2a',
-    alignItems: 'center',
+    textAlign: "center",
   },
   //
   seeMoreContainer: {

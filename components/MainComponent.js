@@ -19,6 +19,7 @@ import { fetchLeaders, fetchProducts, fetchComments, fetchPromos  } from '../red
 import { View } from 'react-native';
 import { StatusBar } from 'react-native';
 import Login from './LoginComponent';
+import Register from './RegisterComponent';
 const mapDispatchToProps = dispatch => ({
   fetchLeaders: () => dispatch(fetchLeaders()),
   fetchProducts: () => dispatch(fetchProducts()),
@@ -32,7 +33,7 @@ function HomeNavigatorScreen() {
       initialRouteName='Home'
       screenOptions={
         {
-        headerStyle: { backgroundColor: '#1e88e5' },
+        headerStyle: { backgroundColor: '#111111' },
         headerTintColor: '#fff',
         headerTitleStyle: { color: '#fff' },
         // tabBarLabel: 'Home',
@@ -44,7 +45,7 @@ function HomeNavigatorScreen() {
         //         />
         //         ),
       }}> 
-        <HomeNavigator.Screen name='Home' component={Home}/>
+        <HomeNavigator.Screen name='Trang Chủ' component={Home}/>
     </HomeNavigator.Navigator>
   );
 }
@@ -55,11 +56,11 @@ function MenuNavigatorScreen() {
     <MenuNavigator.Navigator
       initialRouteName='Menu'
       screenOptions={{
-        headerStyle: { backgroundColor: '#1e88e5' },
+        headerStyle: { backgroundColor: '#111111' },
         headerTintColor: '#fff',
         headerTitleStyle: { color: '#fff' }
       }}>
-      <MenuNavigator.Screen name='Menu' component={Menu} />
+      <MenuNavigator.Screen name='Danh Mục' component={Menu} />
       <MenuNavigator.Screen name='Productdetail' component={Productdetail} options={{ headerTitle: 'Product Detail' }} />
     </MenuNavigator.Navigator>
   );
@@ -71,13 +72,15 @@ function ProfileNavigatorScreen(){
     <ProfileNavigator.Navigator
       initialRouteName='Menu'
       screenOptions={{
-        headerStyle: { backgroundColor: '#1e88e5' },
+        headerStyle: { backgroundColor: '#111111' },
         headerTintColor: '#fff',
         headerTitleStyle: { color: '#fff' }
       }}>
-      <ProfileNavigator.Screen name='Profile' component={Profile} options={{ headerTitle: 'Profile' }}/>
-      <MenuNavigator.Screen name='Favorite' component={Favorite} options={{ headerTitle: 'Favorite' }} />
-      <ProfileNavigator.Screen name='Login' component={Login} options={{ headerTitle: 'Login - Register' }} />
+      <ProfileNavigator.Screen name='Profile' component={Profile} options={{ headerTitle: 'Trang Cá Nhân' }}/>
+      <MenuNavigator.Screen name='Favorite' component={Favorite} options={{ headerTitle: 'Sản Phẩm Yêu Thích' }} />
+      <MenuNavigator.Screen name='Cart' component={Cart} options={{ headerTitle: 'Giỏ Hàng' }} />
+      <ProfileNavigator.Screen name='Login' component={Login} options={{ headerTitle: 'Đăng Nhập' }} />
+      <ProfileNavigator.Screen name='Register' component={Register} options={{ headerTitle: 'Đăng Ký' }} />
     </ProfileNavigator.Navigator>
   );
 }
@@ -88,107 +91,68 @@ function ContactNavigatorScreen(){
     <ContactNavigator.Navigator
       initialRouteName='Menu'
       screenOptions={{
-        headerStyle: { backgroundColor: '#1e88e5' },
+        headerStyle: { backgroundColor: '#111111' },
         headerTintColor: '#fff',
         headerTitleStyle: { color: '#fff' }
       }}>
-      <ContactNavigator.Screen name='Contact' component={Contact} options={{ headerTitle: 'Contact Us' }}/>
+      <ContactNavigator.Screen name='Giới Thiệu' component={Contact} options={{ headerTitle: 'Giới Thiệu' }}/>
     </ContactNavigator.Navigator>
   );
 }
-const FavoritesNavigator = createStackNavigator();
-function FavoritesNavigatorScreen() {
-  return (
-    <FavoritesNavigator.Navigator initialRouteName='Favorites'
-      screenOptions={{
-        headerStyle: { backgroundColor: '#1e88e5' },
-        headerTintColor: '#fff',
-        headerTitleStyle: { color: '#fff' }
-      }}>
-      <FavoritesNavigator.Screen name='Favorites' component={Favorites}
-        options={({ headerTitle: 'Favorite' })} />
-      <MenuNavigator.Screen name='Productdetail' component={Productdetail}
-        options={{
-          headerTitle: 'Product Detail'
-        }} />
-    </FavoritesNavigator.Navigator>
-  );
-}
-const CartNavigator = createStackNavigator();
-function CartNavigatorScreen() {
-  return (
-    <CartNavigator.Navigator
-      initialRouteName="Cart"
-      screenOptions={{
-        headerStyle: { backgroundColor: "#1e88e5" },
-        headerTintColor: "#fff",
-        headerTitleStyle: { color: "#fff" },
-      }}
-    >
-      <CartNavigator.Screen
-        name="Cart"
-        component={Cart}
-        options={({ headerTitle: 'Giỏ Hàng' })}
-      />
-    </CartNavigator.Navigator>
-  );
-}
-const LoginNavigator = createStackNavigator();
-function LoginNavigatorScreen() {
-  return (
-    <LoginNavigator.Navigator initialRouteName='LoginRegister'
-      screenOptions={{
-        headerStyle: { backgroundColor: '#1e88e5' },
-        headerTintColor: '#fff',
-        headerTitleStyle: { color: '#fff' }
-      }}>
-      <LoginNavigator.Screen name='LoginRegister' component={TabNavigatorScreen}
-        options={({ navigation }) => ({
-          headerTitle: 'Login | Register',
-          headerLeft: () => (<Icon name='menu' size={36} color='#fff' onPress={() => navigation.toggleDrawer()} />)
-        })} />
-    </LoginNavigator.Navigator>
-  );
-}
-const TabNavigator = createBottomTabNavigator();
-function TabNavigatorScreen() {
-  return (
-    <TabNavigator.Navigator initialRouteName='Login'
-      tabBarOptions={{
-        activeBackgroundColor: '#7cc',
-        inactiveBackgroundColor: '#fff',
-        activeTintColor: '#fff',
-        inactiveTintColor: 'gray'
-      }}>
-      <TabNavigator.Screen name='Login' component={Login}
-        options={{
-          tabBarLabel: 'Login',
-          tabBarIcon: ({ color, size }) => (<Icon name='sign-in' type='font-awesome' size={size} color={color} />)
-        }} />
-      <TabNavigator.Screen name='Register' component={Register}
-        options={{
-          tabBarLabel: 'Register',
-          tabBarIcon: ({ color, size }) => (<Icon name='user-plus' type='font-awesome' size={size} color={color} />)
-        }} />
-    </TabNavigator.Navigator>
-  );
-}
+// const FavoritesNavigator = createStackNavigator();
+// function FavoritesNavigatorScreen() {
+//   return (
+//     <FavoritesNavigator.Navigator initialRouteName='Favorites'
+//       screenOptions={{
+//         headerStyle: { backgroundColor: '#1e88e5' },
+//         headerTintColor: '#fff',
+//         headerTitleStyle: { color: '#fff' }
+//       }}>
+//       <FavoritesNavigator.Screen name='Favorites' component={Favorites}
+//         options={({ headerTitle: 'Favorite' })} />
+//       <MenuNavigator.Screen name='Productdetail' component={Productdetail}
+//         options={{
+//           headerTitle: 'Product Detail'
+//         }} />
+//     </FavoritesNavigator.Navigator>
+//   );
+// }
+// const CartNavigator = createStackNavigator();
+// function CartNavigatorScreen() {
+//   return (
+//     <CartNavigator.Navigator
+//       initialRouteName="Cart"
+//       screenOptions={{
+//         headerStyle: { backgroundColor: "#1e88e5" },
+//         headerTintColor: "#fff",
+//         headerTitleStyle: { color: "#fff" },
+//       }}
+//     >
+//       <CartNavigator.Screen
+//         name="Cart"
+//         component={Cart}
+//         options={({ headerTitle: 'Giỏ Hàng' })}
+//       />
+//     </CartNavigator.Navigator>
+//   );
+// }
+
 const MainNavigator = createBottomTabNavigator();
 function MainNavigatorScreen() {
   return (
     <MainNavigator.Navigator initialRouteName='Home'>
-      <MainNavigator.Screen name='Home' component={HomeNavigatorScreen} options={{ headerShown: false, tabBarLabel:'Home',
+      <MainNavigator.Screen name='Trang Chủ' component={HomeNavigatorScreen} options={{ headerShown: false, tabBarLabel:'Trang Chủ',
       tabBarIcon:({tintColor})=>(<Ionicons name="ios-home" color={tintColor} size={25}/>) }}/>
-      <MainNavigator.Screen name='Menu' component={MenuNavigatorScreen} options={{ headerShown: false, tabBarLabel:'Menu',
+      <MainNavigator.Screen name='Danh Mục' component={MenuNavigatorScreen} options={{ headerShown: false, tabBarLabel:'Danh Mục',
       tabBarIcon:({tintColor})=>(<Ionicons name="ios-grid" color={tintColor} size={25}/>) }} />
-      <MainNavigator.Screen name='Contact' component={ContactNavigatorScreen} options={{ headerShown: false, tabBarLabel:'Contact',
+      <MainNavigator.Screen name='Giới Thiệu' component={ContactNavigatorScreen} options={{ headerShown: false, tabBarLabel:'Giới Thiệu',
       tabBarIcon:({tintColor})=>(<Ionicons name="ios-call" color={tintColor} size={25}/>) }} />
-      <MainNavigator.Screen name='Profile' component={ProfileNavigatorScreen} options={{ headerShown: false, tabBarLabel:'Profile',
+      <MainNavigator.Screen name='Trang Cá Nhân' component={ProfileNavigatorScreen} options={{ headerShown: false, tabBarLabel:'Trang Cá Nhân',
       tabBarIcon:({tintColor})=>(<Ionicons name="ios-person" color={tintColor} size={25}/>) }} />
-      <MainNavigator.Screen name='Favorites' component={FavoritesNavigatorScreen} options={{ headerShown: false, tabBarLabel: 'My Favorites',
+      {/* <MainNavigator.Screen name='Favorites' component={FavoritesNavigatorScreen} options={{ headerShown: false, tabBarLabel: 'My Favorites',
       tabBarIcon:({tintColor})=>(<Ionicons name="heart" color={tintColor} size={25}/>) }} />
       <MainNavigator.Screen name="Cart" component={CartNavigatorScreen} options={{ title: "Giỏ Hàng",
-      tabBarIcon: ({tintColor})=>(<Ionicons name="cart" color={tintColor} size={25}/>) }} />
+      tabBarIcon: ({tintColor})=>(<Ionicons name="cart" color={tintColor} size={25}/>) }} /> */}
     </MainNavigator.Navigator>
   );
 }
